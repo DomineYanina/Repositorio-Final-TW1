@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.TipoSombrero;
 public class SombreroViewModel {
     private Long id;
     private TipoSombrero tipo;
+    private Double valorProduccion;
     private Long lote;
 
     public SombreroViewModel() {
@@ -25,6 +26,14 @@ public class SombreroViewModel {
 
     public void setTipo(TipoSombrero tipo) {
         this.tipo = tipo;
+    }
+
+    public Double getValorProduccion() {
+        return valorProduccion;
+    }
+
+    public void setValorProduccion(Double valorProduccion) {
+        this.valorProduccion = valorProduccion;
     }
 
     public Long getLote() {

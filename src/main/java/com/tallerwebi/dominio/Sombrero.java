@@ -11,11 +11,19 @@ public class Sombrero {
 
     private TipoSombrero tipo;
 
+    private Double valorProduccion;
+
     @ManyToOne
     @JoinColumn(name = "lote_id")
     private Lote lote;
 
     public Sombrero() {
+    }
+
+    public Sombrero(Long id, TipoSombrero tipo, Double valorProduccion) {
+        this.id = id;
+        this.tipo = tipo;
+        this.valorProduccion = valorProduccion;
     }
 
     public Long getId() {
@@ -32,6 +40,14 @@ public class Sombrero {
 
     public void setTipo(TipoSombrero tipo) {
         this.tipo = tipo;
+    }
+
+    public Double getValorProduccion() {
+        return valorProduccion;
+    }
+
+    public void setValorProduccion(Double valorProduccion) {
+        this.valorProduccion = valorProduccion;
     }
 
     public Lote getLote() {

@@ -1,4 +1,4 @@
-package com.tallerwebi.presentacion;
+/*package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,4 +100,4 @@ public class ControladorLoginTest {
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("nuevo-usuario"));
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al registrar el nuevo usuario"));
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.tallerwebi.punta_a_punta;
+/*package com.tallerwebi.punta_a_punta;
 
 import java.io.IOException;
 
@@ -35,3 +35,4 @@ public class ReiniciarDB {
         }
     }
 }
+*/

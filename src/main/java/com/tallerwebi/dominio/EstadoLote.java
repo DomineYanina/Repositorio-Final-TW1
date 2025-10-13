@@ -3,8 +3,8 @@ package com.tallerwebi.dominio;
 public enum EstadoLote {
 
     No_Iniciado("No Iniciado"),
-    En_Progreso("En Progreso"),
-    Completado("Completado");
+    En_Progreso("En Fabricación"),
+    Completado("Finalizado");
 
     private String descripcion;
 
