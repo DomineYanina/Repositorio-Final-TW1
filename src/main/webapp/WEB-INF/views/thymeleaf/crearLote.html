@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Lote</title>
+</head>
+<body>
+<section>
+    <form class="formNuevoLote" method="POST" th:action="@{/crearLote}" th:object="${loteDTO}">
+        <div>
+            <label for="id">C&oacute;digo</label>
+            <input th:field="*{id}" id="id" type="text" name="id" required>
+        </div>
+        <div>
+            <label for="estado"></label>
+            <select id="estado" name="estado" th:field="*{estado}">
+                <option th:each="estado : ${estados}"
+                        th:value="${estado}"
+                        th:text="${estado}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Crear</button>
+    </form>
+</section>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.EstadoLote;
 import com.tallerwebi.dominio.Lote;
 import com.tallerwebi.dominio.ServicioLote;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class ControladorLote {
     public ModelAndView irACrearLote() {
         ModelAndView mv = new ModelAndView("crearLote");
         mv.addObject("loteDTO", new LoteViewModel());
+        mv.addObject("estados", EstadoLote.values());
         return mv;
     }
 
