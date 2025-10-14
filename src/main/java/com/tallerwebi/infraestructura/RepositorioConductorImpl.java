@@ -21,4 +21,15 @@ public class RepositorioConductorImpl implements RepositorioConductor {
         sessionFactory.getCurrentSession().save(conductor);
         return conductor;
     }
+
+    @Override
+    public Conductor modificar(Conductor conductor) {
+        sessionFactory.getCurrentSession().update(conductor);
+        return sessionFactory.getCurrentSession().get(Conductor.class, conductor.getId());
+    }
+
+    @Override
+    public Conductor buscar(long l) {
+        return sessionFactory.getCurrentSession().get(Conductor.class, l);
+    }
 }
