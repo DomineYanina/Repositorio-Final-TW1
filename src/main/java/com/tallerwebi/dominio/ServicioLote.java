@@ -15,4 +15,6 @@ public interface ServicioLote {
     List<Lote> obtenerLotesFinalizados();
 
     List<Lote> obtenerTodosLosLotes();
+
+    Lote obtenerLotePorId(Long idLote);
 }

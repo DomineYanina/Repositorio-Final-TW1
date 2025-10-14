@@ -74,4 +74,9 @@ public class ServicioLoteImpl implements ServicioLote {
     public List<Lote> obtenerTodosLosLotes() {
         return repositorioLote.obtenerTodosLosLotes();
     }
+
+    @Override
+    public Lote obtenerLotePorId(Long idLote) {
+        return repositorioLote.buscarPorId(idLote);
+    }
 }
