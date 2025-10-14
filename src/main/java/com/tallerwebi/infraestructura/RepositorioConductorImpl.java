@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Conductor;
 import com.tallerwebi.dominio.RepositorioConductor;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +14,11 @@ public class RepositorioConductorImpl implements RepositorioConductor {
     @Autowired
     public RepositorioConductorImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Conductor crear(Conductor conductor) {
+        sessionFactory.getCurrentSession().save(conductor);
+        return conductor;
     }
 }

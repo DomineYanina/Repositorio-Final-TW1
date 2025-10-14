@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Vehiculo;
 import org.hibernate.SessionFactory;
 import com.tallerwebi.dominio.RepositorioVehiculo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +14,11 @@ public class RepositorioVehiculoImpl implements RepositorioVehiculo {
     @Autowired
     public RepositorioVehiculoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Vehiculo crear(Vehiculo vehiculo) {
+        sessionFactory.getCurrentSession().save(vehiculo);
+        return vehiculo;
     }
 }
