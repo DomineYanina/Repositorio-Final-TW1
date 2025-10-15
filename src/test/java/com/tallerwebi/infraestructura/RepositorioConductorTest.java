@@ -15,6 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -164,5 +166,67 @@ public class RepositorioConductorTest {
         assertEquals(conductorAlmacenado.getEdad(), conductorBuscado.getEdad());
         assertEquals(conductorAlmacenado.getSexo(), conductorBuscado.getSexo());
         assertEquals(conductorAlmacenado.getCedula(), conductorBuscado.getCedula());
+    }
+
+    @Test
+    @Rollback
+    public void testQueAlBuscarUnConductorInexistenteMeDevuelvaNull(){
+        Conductor conductorBuscado = repositorioConductor.buscar(999L);
+        assertEquals(null, conductorBuscado);
+    }
+
+    @Test
+    @Rollback
+    public void testQueSiTengo2ConductoresInhabilitadosYSolicitoLosHabilitadosMeDevuelvaUnaListaVacia(){
+        Conductor conductorH1 = new Conductor();
+        conductorH1.setNombre("Conductor Habilitado 1");
+        conductorH1.setId(1L);
+        conductorH1.setEdad(40);
+        conductorH1.setSexo("Masculino");
+        conductorH1.setCedula("HAB1");
+        conductorH1.setEstado(EstadoConductor.Inhabilitado);
+
+        Conductor conductorH2 = new Conductor();
+        conductorH2.setNombre("Conductor Habilitado 2");
+        conductorH2.setId(2L);
+        conductorH2.setEdad(35);
+        conductorH2.setSexo("Femenino");
+        conductorH2.setCedula("HAB2");
+        conductorH2.setEstado(EstadoConductor.Inhabilitado);
+
+        repositorioConductor.crear(conductorH1);
+        repositorioConductor.crear(conductorH2);
+
+        List<Conductor> conductoresHabilitados = repositorioConductor.buscarHabilitados();
+        assertNotNull(conductoresHabilitados);
+        assertEquals(0, conductoresHabilitados.size());
+    }
+
+
+    @Test
+    @Rollback
+    public void testQueSiTengo2ConductoresHabilitadosYSolicitoLosInhabilitadosMeDevuelvaUnaListaVacia(){
+        Conductor conductorH1 = new Conductor();
+        conductorH1.setNombre("Conductor Habilitado 1");
+        conductorH1.setId(1L);
+        conductorH1.setEdad(40);
+        conductorH1.setSexo("Masculino");
+        conductorH1.setCedula("HAB1");
+        conductorH1.setEstado(EstadoConductor.Habilitado);
+
+        Conductor conductorH2 = new Conductor();
+        conductorH2.setNombre("Conductor Habilitado 2");
+        conductorH2.setId(2L);
+        conductorH2.setEdad(35);
+        conductorH2.setSexo("Femenino");
+        conductorH2.setCedula("HAB2");
+        conductorH2.setEstado(EstadoConductor.Habilitado);
+
+        repositorioConductor.crear(conductorH1);
+        repositorioConductor.crear(conductorH2);
+
+        List<Conductor> conductoresInhabilitados = repositorioConductor.buscarInhabilitados();
+        assertNotNull(conductoresInhabilitados);
+        assertEquals(0, conductoresInhabilitados.size());
     }
 }

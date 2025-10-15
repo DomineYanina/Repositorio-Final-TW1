@@ -12,4 +12,6 @@ public interface RepositorioVehiculo {
     List<Vehiculo> buscarHabilitados();
 
     List<Vehiculo> buscarInhabilitados();
+
+    List<Vehiculo> buscarTodos();
 }

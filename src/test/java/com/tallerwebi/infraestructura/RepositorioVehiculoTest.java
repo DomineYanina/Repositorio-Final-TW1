@@ -1,8 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.EstadoVehiculo;
-import com.tallerwebi.dominio.RepositorioVehiculo;
-import com.tallerwebi.dominio.Vehiculo;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -217,4 +215,48 @@ public class RepositorioVehiculoTest {
         assertEquals(vehiculosInhabilitados.size(), vehiculosInhabilitadosBuscados.size());
         assertEquals(vehiculosInhabilitados.get(0).getId(), vehiculosInhabilitadosBuscados.get(0).getId());
     }
+
+    @Test
+    @Rollback
+    public void testQueSiTengo2VehiculosInhabilitadosYSolicitoLosHabilitadosMeDevuelvaUnaListaVacia(){
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setMarca("Toyota");
+        vehiculo.setEstado(EstadoVehiculo.Inhabilitado);
+        vehiculo.setId(1L);
+
+        Vehiculo vehiculo2 = new Vehiculo();
+        vehiculo2.setMarca("Mazda");
+        vehiculo2.setEstado(EstadoVehiculo.Inhabilitado);
+        vehiculo2.setId(2L);
+
+        repositorioVehiculo.crear(vehiculo);
+        repositorioVehiculo.crear(vehiculo2);
+
+        List<Vehiculo> vehiculosHabilitados = repositorioVehiculo.buscarHabilitados();
+        assertNotNull(vehiculosHabilitados);
+        assertEquals(0, vehiculosHabilitados.size());
+    }
+
+
+    @Test
+    @Rollback
+    public void testQueSiTengo2VehiculosHabilitadosYSolicitoLosHabilitadosMeDevuelvaUnaListaVacia(){
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setMarca("Toyota");
+        vehiculo.setEstado(EstadoVehiculo.Habilitado);
+        vehiculo.setId(1L);
+
+        Vehiculo vehiculo2 = new Vehiculo();
+        vehiculo2.setMarca("Mazda");
+        vehiculo2.setEstado(EstadoVehiculo.Habilitado);
+        vehiculo2.setId(2L);
+
+        repositorioVehiculo.crear(vehiculo);
+        repositorioVehiculo.crear(vehiculo2);
+
+        List<Vehiculo> vehiculosInhabilitados = repositorioVehiculo.buscarInhabilitados();
+        assertNotNull(vehiculosInhabilitados);
+        assertEquals(0, vehiculosInhabilitados.size());
+    }
+
 }

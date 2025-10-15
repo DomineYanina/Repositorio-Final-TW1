@@ -55,4 +55,11 @@ public class RepositorioVehiculoImpl implements RepositorioVehiculo {
                 .setParameter("estadoVehiculo", EstadoVehiculo.Inhabilitado)
                 .getResultList();
     }
+
+    @Override
+    public List<Vehiculo> buscarTodos() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Vehiculo", Vehiculo.class)
+                .getResultList();
+    }
 }
