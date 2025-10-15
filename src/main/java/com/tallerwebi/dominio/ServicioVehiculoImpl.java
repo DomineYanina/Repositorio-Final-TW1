@@ -1,5 +1,8 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.ConductorInhabilitadoException;
+import com.tallerwebi.dominio.excepcion.VehiculoInhabilitadoException;
+import com.tallerwebi.dominio.excepcion.VehiculoYaAsignadoException;
 import com.tallerwebi.presentacion.VehiculoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,12 +43,18 @@ public class ServicioVehiculoImpl implements ServicioVehiculo {
         Conductor conductor = repositorioConductor.buscar(vehiculoViewModel.getConductor());
         Vehiculo vehiculo = repositorioVehiculo.buscar(vehiculoViewModel.getId());
         Vehiculo vehiculoResultado;
-        if(((conductor.getEstado().equals(EstadoConductor.Habilitado))&&(vehiculo.getEstado().equals(EstadoVehiculo.Habilitado)))||(vehiculo.getConductor()!=null)){
-            vehiculo.setConductor(conductor);
-            vehiculoResultado = repositorioVehiculo.modificar(vehiculo);
-        } else{
-            vehiculoResultado = null;
+        if(vehiculo.getConductor()!=null){
+            throw new VehiculoYaAsignadoException();
         }
+        if(!conductor.getEstado().equals(EstadoConductor.Habilitado)){
+            throw new ConductorInhabilitadoException();
+        }
+        if(!vehiculo.getEstado().equals(EstadoVehiculo.Habilitado)){
+            throw new VehiculoInhabilitadoException();
+        }
+        vehiculo.setConductor(conductor);
+        vehiculoResultado = repositorioVehiculo.modificar(vehiculo);
+
         return vehiculoResultado;
     }
 
@@ -62,5 +71,10 @@ public class ServicioVehiculoImpl implements ServicioVehiculo {
     @Override
     public List<Vehiculo> buscarTodos() {
         return repositorioVehiculo.buscarTodos();
+    }
+
+    @Override
+    public Vehiculo buscarPorId(Long any) {
+        return repositorioVehiculo.buscar(any);
     }
 }

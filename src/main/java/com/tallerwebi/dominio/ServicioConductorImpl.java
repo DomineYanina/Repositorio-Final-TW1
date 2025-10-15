@@ -53,4 +53,9 @@ public class ServicioConductorImpl implements ServicioConductor {
     public List<Conductor> buscarTodos() {
         return repositorioConductor.buscarTodos();
     }
+
+    @Override
+    public Conductor buscarPorId(Long conductor) {
+        return repositorioConductor.buscar(conductor);
+    }
 }

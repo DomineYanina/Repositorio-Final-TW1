@@ -1,5 +1,8 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.ConductorInhabilitadoException;
+import com.tallerwebi.dominio.excepcion.VehiculoInhabilitadoException;
+import com.tallerwebi.dominio.excepcion.VehiculoYaAsignadoException;
 import com.tallerwebi.presentacion.ConductorViewModel;
 import com.tallerwebi.presentacion.VehiculoViewModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.annotation.Rollback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +19,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 public class ServicioVehiculoTest {
+
     @Mock
     private RepositorioVehiculo repositorioVehiculo;
+
     @Mock
     private RepositorioConductor repositorioConductor;
 
@@ -73,7 +77,6 @@ public class ServicioVehiculoTest {
 
         when(repositorioVehiculo.buscar(any(Long.class))).thenReturn(vehiculoCreado);
 
-        // Modificar los datos del vehículo
         vehiculoCreado.setMarca("Honda");
         vehiculoCreado.setEstado(EstadoVehiculo.Inhabilitado);
 
@@ -124,9 +127,9 @@ public class ServicioVehiculoTest {
         when(repositorioVehiculo.buscar(any(Long.class))).thenReturn(vehiculo);
         when(repositorioConductor.buscar(any(Long.class))).thenReturn(conductor);
 
-        Vehiculo vehiculoModificado = servicioVehiculo.asignarConductor(vehiculoViewModel);
-
-        assertNull(vehiculoModificado);
+        assertThrows(ConductorInhabilitadoException.class, () ->{
+            servicioVehiculo.asignarConductor(vehiculoViewModel);
+        });
     }
 
     @Test
@@ -162,9 +165,9 @@ public class ServicioVehiculoTest {
         when(repositorioVehiculo.buscar(any(Long.class))).thenReturn(vehiculo);
         when(repositorioConductor.buscar(any(Long.class))).thenReturn(conductor);
 
-        Vehiculo vehiculoModificado = servicioVehiculo.asignarConductor(vehiculoViewModel);
-
-        assertNull(vehiculoModificado);
+        assertThrows(VehiculoInhabilitadoException.class, () ->{
+            servicioVehiculo.asignarConductor(vehiculoViewModel);
+        });
     }
 
     @Test
@@ -258,9 +261,9 @@ public class ServicioVehiculoTest {
         when(repositorioConductor.buscar(2L)).thenReturn(conductor2);
         when(repositorioConductor.buscar(1L)).thenReturn(conductor1);
 
-        Vehiculo vehiculoModificado = servicioVehiculo.asignarConductor(vehiculoViewModel);
-
-        assertNull(vehiculoModificado);
+        assertThrows(VehiculoYaAsignadoException.class, () ->{
+            servicioVehiculo.asignarConductor(vehiculoViewModel);
+        });
     }
 
     @Test

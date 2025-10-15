@@ -16,4 +16,6 @@ public interface ServicioVehiculo {
     List<Vehiculo> buscarTodosInhabilitados();
 
     List<Vehiculo> buscarTodos();
+
+    Vehiculo buscarPorId(Long any);
 }

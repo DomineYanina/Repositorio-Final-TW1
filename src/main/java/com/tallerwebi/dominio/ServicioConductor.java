@@ -14,4 +14,6 @@ public interface ServicioConductor {
     List<Conductor> buscarTodosInhabilitados();
 
     List<Conductor> buscarTodos();
+
+    Conductor buscarPorId(Long conductor);
 }
