@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.EstadoLote;
 import com.tallerwebi.dominio.Lote;
 import com.tallerwebi.dominio.ServicioLote;
+import com.tallerwebi.dominio.excepcion.CodigoExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,10 @@ public class ControladorLote {
     @PostMapping("/crearLote")
     public ModelAndView crearLote(@ModelAttribute ("loteDTO") LoteViewModel loteDTO) {
         ModelAndView mav;
-        Lote lote = servicioLote.crearLote(loteDTO);
-        if(lote!=null){
+        try{
+            Lote lote = servicioLote.crearLote(loteDTO);
             mav = new ModelAndView("lotes");
+
             List<Lote> listaLotes = servicioLote.obtenerTodosLosLotes();
             List<LoteViewModel> listaLotesDTO = new ArrayList<>();
             for (Lote lote1 : listaLotes) {
@@ -60,9 +62,10 @@ public class ControladorLote {
 
             mav.addObject("listaLotes", listaLotesDTO);
             mav.addObject("listaLotesFinalizados", listaLotesFinalizadosDTO);
-        } else {
+        }
+        catch (CodigoExistenteException e){
             mav = new ModelAndView("crearLote");
-            mav.addObject("error", "Código existente en otro lote.");
+            mav.addObject("error", e.getMessage());
         }
         return mav;
     }

@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.CodigoExistenteException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
@@ -66,11 +68,12 @@ public class ControladorLoteTest {
     @Test
     public void testQueAlIntentarCrearUnLoteConIdExistenteGenereQueSeMantengaEnLaMismaVistaYSeAgregueUnMensajeDeError() {
         Lote lote = null; // Simula que no se pudo crear el lote porque el ID ya existe
-        when(servicioLote.crearLote(any(LoteViewModel.class))).thenReturn(lote);
+        when(servicioLote.crearLote(any(LoteViewModel.class))).thenThrow(new CodigoExistenteException());
 
         ModelAndView mav = controladorLote.crearLote(loteDTO);
         assertThat(mav.getViewName(), is("crearLote"));
         assertThat(mav.getModel(), hasKey("error"));
+        assertEquals("Código existente en otro lote", mav.getModel().get("error"));
     }
 
     @Test

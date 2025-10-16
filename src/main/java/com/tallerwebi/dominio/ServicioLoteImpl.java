@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.CodigoExistenteException;
 import com.tallerwebi.presentacion.LoteViewModel;
 import com.tallerwebi.presentacion.SombreroViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ServicioLoteImpl implements ServicioLote {
         Lote loteResultado = null;
         Lote loteEncontrado = repositorioLote.buscarPorId(loteViewModel.getId());
         if (loteEncontrado != null) {
-            throw new IllegalArgumentException("El lote con ID " + loteViewModel.getId() + " ya existe.");
+            throw new CodigoExistenteException();
         } else {
             Lote lote = new Lote();
             lote.setId(loteViewModel.getId());
