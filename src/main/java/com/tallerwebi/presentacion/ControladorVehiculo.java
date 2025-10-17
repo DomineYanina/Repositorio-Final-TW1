@@ -5,7 +5,9 @@ import com.tallerwebi.dominio.excepcion.AsignacionConductorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -29,7 +31,7 @@ public class ControladorVehiculo {
     }
 
     @PostMapping("/registrarVehiculo")
-    public ModelAndView registrar(VehiculoViewModel vehiculoViewModel) {
+    public ModelAndView registrar(@ModelAttribute("vehiculoDTO") VehiculoViewModel vehiculoViewModel) {
         servicioVehiculo.crear(vehiculoViewModel);
         ModelAndView mav = new ModelAndView("listarVehiculos");
         mav.addObject("vehiculosHabilitados", servicioVehiculo.buscarTodosHabilitados());
@@ -37,8 +39,22 @@ public class ControladorVehiculo {
         return mav;
     }
 
+    @GetMapping("/irAAsignarConductorAVehiculo")
+    public ModelAndView irAAsignarConductorAVehiculo(@RequestParam("id") Long id) {
+        ModelAndView mav = new ModelAndView("asignarConductorAVehiculo");
+        Vehiculo vehiculo = servicioVehiculo.buscarPorId(id);
+        VehiculoViewModel vehiculoViewModel = new VehiculoViewModel();
+        vehiculoViewModel.setId(vehiculo.getId());
+        vehiculoViewModel.setMarca(vehiculo.getMarca());
+        vehiculoViewModel.setPatente(vehiculo.getPatente());
+
+        mav.addObject("vehiculoDTO", vehiculoViewModel);
+        mav.addObject("conductoresHabilitados", servicioConductor.buscarTodosHabilitados());
+        return mav;
+    }
+
     @PostMapping("/asignarConductorAVehiculo")
-    public ModelAndView asignarConductor(VehiculoViewModel vehiculoViewModel) {
+    public ModelAndView asignarConductor(@ModelAttribute("vehiculoDTO") VehiculoViewModel vehiculoViewModel) {
         ModelAndView mav = new ModelAndView("listarVehiculos");
         mav.addObject("vehiculosHabilitados", servicioVehiculo.buscarTodosHabilitados());
         mav.addObject("todosLosVehiculos", servicioVehiculo.buscarTodos());
@@ -49,6 +65,15 @@ public class ControladorVehiculo {
         } catch (AsignacionConductorException e){
             mav.addObject("error", e.getMessage());
         }
+        return mav;
+    }
+
+    @PostMapping("/cambiarEstadoVehiculo")
+    public ModelAndView cambiarEstadoVehiculo(@RequestParam("id") Long id){
+        servicioVehiculo.cambiarEstado(id);
+        ModelAndView mav = new ModelAndView("listarVehiculos");
+        mav.addObject("vehiculosHabilitados", servicioVehiculo.buscarTodosHabilitados());
+        mav.addObject("todosLosVehiculos", servicioVehiculo.buscarTodos());
         return mav;
     }
 }

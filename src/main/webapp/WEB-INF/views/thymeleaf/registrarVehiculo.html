@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registrar vehículo</title>
+    </head>
+    <body>
+        <section>
+            <form th:object="${vehiculoDTO}" th:action="@{/registrarVehiculo}" method="post">
+                <div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" th:field="*{marca}" required>
+                </div>
+                <div>
+                    <label for="patente">Patente:</label>
+                    <input type="text" id="patente" th:field="*{patente}" required>
+                </div>
+                <div>
+                    <button type="submit">Registrar vehículo</button>
+                </div>
+            </form>
+        </section>
+    </body>
+</html>

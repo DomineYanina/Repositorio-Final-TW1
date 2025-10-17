@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de conductores</title>
+    <script>
+        function mostrarSection(sectionId) {
+            document.getElementById('conductoresHabilitados').style.display = sectionId === 'conductoresHabilitados' ? 'block' : 'none';
+            document.getElementById('conductores').style.display = sectionId === 'conductores' ? 'block' : 'none';
+        }
+        window.onload = function() {
+            mostrarSection('conductoresHabilitados');
+        }
+    </script>
+</head>
+<body>
+    <button onclick="mostrarSection('conductoresHabilitados')">Conductores habilitados</button>
+    <button onclick="mostrarSection('conductores')">Todos los conductores</button>
+
+    <section id="conductoresHabilitados">
+            <h1>Listado de conductores habilitados</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cédula</th>
+                        <th>Nacionalidad</th>
+                        <th>Sexo</th>
+                        <th>Edad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="conductor : ${conductoresHabilitados}">
+                        <td th:text="${conductor.nombre}">Nombre</td>
+                        <td th:text="${conductor.cedula}">Cédula</td>
+                        <td th:text="${conductor.nacionalidad}">Nacionalidad</td>
+                        <td th:text="${conductor.sexo}">Sexo</td>
+                        <td th:text="${conductor.edad}">Edad</td>
+                        <td>
+                            <form th:action="@{/cambiarEstadoconductor}" method="post">
+                                <input type="hidden" name="id" th:value="${conductor.id}" />
+                                <button type="submit">Cambiar estado</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="conductores">
+            <h1>Listado completo de conductores</h1>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cédula</th>
+                    <th>Nacionalidad</th>
+                    <th>Sexo</th>
+                    <th>Edad</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="conductor : ${todosLosConductores}">
+                    <td th:text="${conductor.nombre}">Nombre</td>
+                    <td th:text="${conductor.cedula}">Cédula</td>
+                    <td th:text="${conductor.nacionalidad}">Nacionalidad</td>
+                    <td th:text="${conductor.sexo}">Sexo</td>
+                    <td th:text="${conductor.edad}">Edad</td>
+                    <td>
+                        <form th:action="@{/cambiarEstadoconductor}" method="post">
+                            <input type="hidden" name="id" th:value="${conductor.id}" />
+                            <button type="submit">Cambiar estado</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </body>
+</html>

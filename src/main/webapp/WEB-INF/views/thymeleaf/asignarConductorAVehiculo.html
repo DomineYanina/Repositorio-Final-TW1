@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section>
+    <h1>Asignar conductor al vehículo: <span th:text="${vehiculoDTO.patente}">Vehículo</span></h1>
+    <form th:action="@{/asignarConductorAVehiculo}" method="post">
+        <input type="hidden" name="id" th:value="${vehiculo.id}" />
+        <label for="conductorId">Seleccionar conductor:</label>
+        <select name="conductorId" id="conductorId">
+            <option th:each="conductor : ${conductoresHabilitados}"
+                    th:value="${conductor.id}"
+                    th:text="${conductor.nombre} + ' (' + ${conductor.cedula} + ')'">
+                Conductor
+            </option>
+        </select>
+        <button type="submit">Asignar conductor</button>
+    </form>
+</section>
+
+</body>
+</html>

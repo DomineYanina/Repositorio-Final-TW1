@@ -16,4 +16,6 @@ public interface ServicioConductor {
     List<Conductor> buscarTodos();
 
     Conductor buscarPorId(Long conductor);
+
+    void cambiarEstado(Long id);
 }

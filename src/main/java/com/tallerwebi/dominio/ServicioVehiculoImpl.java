@@ -77,4 +77,15 @@ public class ServicioVehiculoImpl implements ServicioVehiculo {
     public Vehiculo buscarPorId(Long any) {
         return repositorioVehiculo.buscar(any);
     }
+
+    @Override
+    public void cambiarEstado(Long id) {
+        Vehiculo vehiculo = repositorioVehiculo.buscar(id);
+        if(vehiculo.getEstado().equals(EstadoVehiculo.Habilitado)){
+            vehiculo.setEstado(EstadoVehiculo.Inhabilitado);
+        } else {
+            vehiculo.setEstado(EstadoVehiculo.Habilitado);
+        }
+        repositorioVehiculo.modificar(vehiculo);
+    }
 }

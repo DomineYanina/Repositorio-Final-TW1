@@ -58,4 +58,15 @@ public class ServicioConductorImpl implements ServicioConductor {
     public Conductor buscarPorId(Long conductor) {
         return repositorioConductor.buscar(conductor);
     }
+
+    @Override
+    public void cambiarEstado(Long id) {
+        Conductor conductor = repositorioConductor.buscar(id);
+        if (conductor.getEstado() == EstadoConductor.Habilitado) {
+            conductor.setEstado(EstadoConductor.Inhabilitado);
+        } else {
+            conductor.setEstado(EstadoConductor.Habilitado);
+        }
+        repositorioConductor.modificar(conductor);
+    }
 }

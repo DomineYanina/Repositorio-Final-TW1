@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vehículos</title>
+        <script>
+            function mostrarSection(sectionId) {
+                document.getElementById('vehiculosHabilitados').style.display = sectionId === 'vehiculosHabilitados' ? 'block' : 'none';
+                document.getElementById('todosLosVehiculos').style.display = sectionId === 'todosLosVehiculos' ? 'block' : 'none';
+            }
+            window.onload = function() {
+                mostrarSection('vehiculosHabilitados');
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="mostrarSection('vehiculosHabilitados')">Vehículos habilitados</button>
+        <button onclick="mostrarSection('todosLosVehiculos')">Todos los vehículos</button>
+
+        <section id="vehiculosHabilitados">
+            <h1>Listado de vehículos habilitados</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Patente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vehiculo : ${vehiculosHabilitados}">
+                        <td th:text="${vehiculo.marca}">Marca</td>
+                        <td th:text="${vehiculo.patente}">Patente</td>
+                        <td>
+                            <form th:action="@{/cambiarEstadoVehiculo}" method="post">
+                                <input type="hidden" name="id" th:value="${vehiculo.id}" />
+                                <button type="submit">Cambiar estado</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/irAAsignarConductorAVehiculo}" method="post">
+                                <input type="hidden" name="id" th:value="${vehiculo.id}" />
+                                <button type="submit">Asignar conductor</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="todosLosVehiculos">
+            <h1>Listado de todos los vehículos</h1>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Patente</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vehiculo : ${todosLosVehiculos}">
+                    <td th:text="${vehiculo.marca}">Marca</td>
+                    <td th:text="${vehiculo.patente}">Patente</td>
+                    <td>
+                        <form th:action="@{/cambiarEstadoVehiculo}" method="post">
+                            <input type="hidden" name="id" th:value="${vehiculo.id}" />
+                            <button type="submit">Cambiar estado</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </body>
+</html>

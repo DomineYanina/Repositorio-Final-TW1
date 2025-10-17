@@ -18,4 +18,6 @@ public interface ServicioVehiculo {
     List<Vehiculo> buscarTodos();
 
     Vehiculo buscarPorId(Long any);
+
+    void cambiarEstado(Long id);
 }
