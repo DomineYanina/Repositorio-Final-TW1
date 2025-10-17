@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository("repositorioConductor")
@@ -18,23 +19,27 @@ public class RepositorioConductorImpl implements RepositorioConductor {
     }
 
     @Override
+    @Transactional
     public Conductor crear(Conductor conductor) {
         sessionFactory.getCurrentSession().save(conductor);
         return conductor;
     }
 
     @Override
+    @Transactional
     public Conductor modificar(Conductor conductor) {
         sessionFactory.getCurrentSession().update(conductor);
         return sessionFactory.getCurrentSession().get(Conductor.class, conductor.getId());
     }
 
     @Override
+    @Transactional
     public Conductor buscar(long l) {
         return sessionFactory.getCurrentSession().get(Conductor.class, l);
     }
 
     @Override
+    @Transactional
     public List<Conductor> buscarHabilitados() {
         String hql = "FROM Conductor l WHERE l.estado = :estadoConductor";
 
@@ -45,6 +50,7 @@ public class RepositorioConductorImpl implements RepositorioConductor {
     }
 
     @Override
+    @Transactional
     public List<Conductor> buscarInhabilitados() {
         String hql = "FROM Conductor l WHERE l.estado = :estadoConductor";
 
@@ -55,6 +61,7 @@ public class RepositorioConductorImpl implements RepositorioConductor {
     }
 
     @Override
+    @Transactional
     public List<Conductor> buscarTodos() {
         String hql = "FROM Conductor";
 

@@ -37,7 +37,7 @@
                             </form>
                         </td>
                         <td>
-                            <form th:action="@{/irAAsignarConductorAVehiculo}" method="post">
+                            <form th:action="@{/irAAsignarConductorAVehiculo}" method="get">
                                 <input type="hidden" name="id" th:value="${vehiculo.id}" />
                                 <button type="submit">Asignar conductor</button>
                             </form>

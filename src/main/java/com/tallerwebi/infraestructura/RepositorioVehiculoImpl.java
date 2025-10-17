@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.RepositorioVehiculo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository("repositorioVehiculo")
@@ -20,23 +21,27 @@ public class RepositorioVehiculoImpl implements RepositorioVehiculo {
     }
 
     @Override
+    @Transactional
     public Vehiculo crear(Vehiculo vehiculo) {
         sessionFactory.getCurrentSession().save(vehiculo);
         return vehiculo;
     }
 
     @Override
+    @Transactional
     public Vehiculo modificar(Vehiculo vehiculoAlmacenado) {
         sessionFactory.getCurrentSession().update(vehiculoAlmacenado);
         return sessionFactory.getCurrentSession().get(Vehiculo.class, vehiculoAlmacenado.getId());
     }
 
     @Override
+    @Transactional
     public Vehiculo buscar(long l) {
         return sessionFactory.getCurrentSession().get(Vehiculo.class, l);
     }
 
     @Override
+    @Transactional
     public List<Vehiculo> buscarHabilitados() {
         String hql = "FROM Vehiculo l WHERE l.estado = :estadoVehiculo";
 
@@ -47,6 +52,7 @@ public class RepositorioVehiculoImpl implements RepositorioVehiculo {
     }
 
     @Override
+    @Transactional
     public List<Vehiculo> buscarInhabilitados() {
         String hql = "FROM Vehiculo l WHERE l.estado = :estadoVehiculo";
 
@@ -57,6 +63,7 @@ public class RepositorioVehiculoImpl implements RepositorioVehiculo {
     }
 
     @Override
+    @Transactional
     public List<Vehiculo> buscarTodos() {
         return sessionFactory.getCurrentSession()
                 .createQuery("FROM Vehiculo", Vehiculo.class)

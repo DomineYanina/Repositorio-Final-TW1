@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
+
 @Controller
 public class ControladorVehiculo {
 
@@ -31,6 +33,7 @@ public class ControladorVehiculo {
     }
 
     @PostMapping("/registrarVehiculo")
+    @Transactional
     public ModelAndView registrar(@ModelAttribute("vehiculoDTO") VehiculoViewModel vehiculoViewModel) {
         servicioVehiculo.crear(vehiculoViewModel);
         ModelAndView mav = new ModelAndView("listarVehiculos");
@@ -54,6 +57,7 @@ public class ControladorVehiculo {
     }
 
     @PostMapping("/asignarConductorAVehiculo")
+    @Transactional
     public ModelAndView asignarConductor(@ModelAttribute("vehiculoDTO") VehiculoViewModel vehiculoViewModel) {
         ModelAndView mav = new ModelAndView("listarVehiculos");
         mav.addObject("vehiculosHabilitados", servicioVehiculo.buscarTodosHabilitados());
@@ -69,6 +73,7 @@ public class ControladorVehiculo {
     }
 
     @PostMapping("/cambiarEstadoVehiculo")
+    @Transactional
     public ModelAndView cambiarEstadoVehiculo(@RequestParam("id") Long id){
         servicioVehiculo.cambiarEstado(id);
         ModelAndView mav = new ModelAndView("listarVehiculos");

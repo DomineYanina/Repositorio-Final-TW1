@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
+
 @Controller
 public class ControladorConductor {
 
@@ -27,6 +29,7 @@ public class ControladorConductor {
     }
 
     @PostMapping("/registrarConductor")
+    @Transactional
     public ModelAndView registrar(@ModelAttribute("conductorDTO") ConductorViewModel conductorViewModel) {
         servicioConductor.crear(conductorViewModel);
         ModelAndView mav = new ModelAndView("listarConductores");
@@ -36,6 +39,7 @@ public class ControladorConductor {
     }
 
     @PostMapping("/cambiarEstadoconductor")
+    @Transactional
     public ModelAndView cambiarEstadoConductor(@RequestParam ("id") Long id) {
         servicioConductor.cambiarEstado(id);
         ModelAndView mav = new ModelAndView("listarConductores");
