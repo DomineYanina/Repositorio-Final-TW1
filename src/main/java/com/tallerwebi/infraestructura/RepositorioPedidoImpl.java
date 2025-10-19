@@ -1,4 +1,4 @@
 package com.tallerwebi.infraestructura;
 
-public class EliminaEsto {
+public class RepositorioPedidoImpl {
 }

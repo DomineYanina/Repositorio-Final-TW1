@@ -1,4 +1,4 @@
 package com.tallerwebi.dominio;
 
-public class EliminaEsto {
+public class ServicioPedidoTest {
 }

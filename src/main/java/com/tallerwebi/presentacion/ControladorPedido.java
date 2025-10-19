@@ -1,4 +1,4 @@
 package com.tallerwebi.presentacion;
 
-public class EliminaEsto {
+public class ControladorPedido {
 }
