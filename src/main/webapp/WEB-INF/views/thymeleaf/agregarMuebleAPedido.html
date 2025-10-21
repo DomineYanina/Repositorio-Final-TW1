@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar mueble</title>
+</head>
+<body>
+    <form th:action="@{/agregarMuebleAPedido}" th:object="${muebleViewModel}">
+        <h1>Agregar mueble al pedido</h1>
+        <div>
+           <label for="pedidoId">ID del pedido</label>
+            <input type="text" id="pedidoId" th:field="*{pedido}"/>
+        </div>
+        <div>
+           <label for="codigo">C&oacute;digo del mueble</label>
+            <input type="text" id="codigo" th:field="*{codigo}"/>
+        </div>
+        <div>
+            <label for="precio">Precio</label>
+            <input type="number" id="precio" th:field="*{costo}"/>
+        </div>
+        <button type="submit">Agregar mueble</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear pedido</title>
+</head>
+<body>
+    <p th:if="${error != null}" th:text="${error}"></p>
+    <form th:object="${pedido}" th:action="@{/crearPedido}">
+        <h1>Crear pedido</h1>
+        <div>
+           <label for="codigo">C&oacute;digo</label>
+            <input type="text" id="codigo" th:field="*{codigo}"/>
+        </div>
+        <button type="submit">Crear pedido</button>
+    </form>
+</body>
+</html>

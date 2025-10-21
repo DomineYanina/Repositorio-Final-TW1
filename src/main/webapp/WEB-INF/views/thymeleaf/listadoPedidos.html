@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de pedidos</title>
+    <script>
+        function mostrarSection(sectionId) {
+            document.getElementById('pedidosEntregados').style.display = sectionId === 'pedidosEntregados' ? 'block' : 'none';
+            document.getElementById('pedidos').style.display = sectionId === 'pedidos' ? 'block' : 'none';
+        }
+        window.onload = function() {
+            mostrarSection('pedidosEntregados');
+        }
+    </script>
+</head>
+<body>
+<button onclick="mostrarSection('pedidosEntregados')">Pedidos entregados</button>
+<button onclick="mostrarSection('pedidos')">Todos los pedidos</button>
+<section id="pedidosEntregados">
+    <h1>Listado de pedidos entregados</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Pedido</th>
+                <th>C&oacute;digo</th>
+                <th>Estado</th>
+                <th>Cantidad de muebles</th>
+                <th>Precio lote</th>
+                <th>Agregar mueble</th>
+                <th>Avanzar estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido : ${pedidosEntregados}">
+                <td th:text="${pedido.id}">1</td>
+                <td th:text="${pedido.codigo}">Cliente A</td>
+                <td th:text="${pedido.estado}">Entregado</td>
+                <td th:text="${#lists.size(pedido.muebles)}">0</td>
+                <td th:text="${pedido.calcularPrecioTotal()}">0.0</td>
+                <td>
+                    <form th:action="@{/irAAgregarMuebleAPedido}" method="get">
+                        <input type="hidden" th:name="idPedido" th:value="${pedido.id}"/>
+                        <button type="submit">Agregar mueble</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/avanzarEstado}" method="post">
+                        <input type="hidden" th:name="codigo" th:value="${pedido.codigo}"/>
+                        <button type="submit">Avanzar Estado</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
