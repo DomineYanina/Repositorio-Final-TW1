@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtrar por categoría</title>
+</head>
+<body>
+
+    <form th:action="@{/filtrarPorCategoria}" method="get">
+        <div>
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria">
+                <option th:each="categoria : ${Categorias}" th:text="${categoria.name()}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Buscar</button>
+        </div>
+    </form>
+
+</body>
+</html>

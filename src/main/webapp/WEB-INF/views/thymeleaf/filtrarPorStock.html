@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtrar por stock</title>
+</head>
+<body>
+    <form th:action="@{/filtrarPorStock}" method="get">
+        <div>
+            <label for="stock">Stock</label>
+            <input id="stock" name="stock" type="text">
+        </div>
+        <div>
+            <button type="submit" id="btnBuscar">Filtrar</button>
+        </div>
+    </form>
+</body>
+</html>
+
